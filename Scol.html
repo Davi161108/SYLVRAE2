@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* TOPO */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: white;
+            border-bottom: 1px solid #f0c5d8;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        /* HEADER */
+        .top-header {
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* LOGO */
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #333;
+            text-decoration: none;
+        }
+
+
+        /* PESQUISA */
+        .search-box {
+            border: 1px solid #ccc;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            width: 40%;
+            max-width: 350px;
+            background: #f2f2f2;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+
+
+        .search-box button {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            background: none;
+        }
+
+
+        .search-box input {
+            border: none;
+            background: none;
+            width: 100%;
+            font-size: 14px;
+            outline: none;
+            padding: 8px 12px;
+        }
+
+
+
+
+        /* ICONS */
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icons i {
+            font-size: 25px;
+            color: #444;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .icons i:hover {
+            color: #d60078;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
+
+        /* SACOLA COM NOTIFICAÇÃO */
+        .cart {
+            position: relative;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            background: #e00076;
+            color: white;
+            padding: 2px 6px;
+            font-size: 11px;
+            border-radius: 50%;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 750px) {
+            .search-box {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .top-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .icons i {
+                font-size: 22px;
+            }
+        }
+
+
+
+
+        /* MENU */
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 10px 0;
+            background: white;
+            border-bottom: 1px solid #f1f1f1;
+            position: absolute;
+            top: 70px;
+            width: 100%;
+            z-index: 999;
+
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .menu a:hover {
+            color: #d60078;
+        }
+
+
+        @media (max-width:900px) {
+            .search-box {
+                display: none;
+            }
+
+            .menu {
+                flex-wrap: wrap;
+                gap: 12px;
+                display: none;
+            }
+
+            .top-header {
+                padding: 10px 20px;
+            }
+        }
+
+        :root {
+            --purple-1: #6b1b6e;
+            --purple-2: #d24c8f;
+            --accent: #ffefef;
+            --black: #0b0b0b;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            background: #fff
+        }
+
+
+
+
+
+
+        /* esconder header/menu */
+        .hide-scroll {
+            transform: translateY(-120%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* esconder overlays */
+        .is-hidden {
+            display: none;
+        }
+
+
+
+
+
+
+
+
+
+        main {
+            padding-top: 140px;
+            /* espaço para não ficar por baixo do header+menu */
+        }
+
+
+        .filter-box {
+            width: 100%;
+            max-width: 260px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            font-family: Arial, sans-serif;
+            margin-top: 10%;
+        }
+
+        .filter-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group h4 {
+            font-size: 15px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .filter-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ff6b82;
+            /* cor do checkbox moderno */
+            cursor: pointer;
+        }
+
+        .filter-item span {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* --- RESPONSIVO --- */
+
+        @media (max-width: 768px) {
+            .filter-box {
+                max-width: 100%;
+                width: 100%;
+                box-shadow: none;
+                padding: 10px 0;
+            }
+        }
+
+        /* RESET */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        :root {
+            --purple-1: #6b1b6e;
+            --purple-2: #d24c8f;
+            --accent: #ffefef;
+            --black: #0b0b0b;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            background: #fff
+        }
+
+
+
+
+
+        /* --- BANNER CATEGORIA --- */
+
+        .category-banner {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 80px;
+            background: #f7f7f7;
+            gap: 20px;
+            flex-wrap: wrap;
+            /* importante para responsividade */
+        }
+
+        .banner-text {
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .banner-text h1 {
+            font-size: 45px;
+            font-weight: 900;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .banner-text .product-count {
+            font-size: 18px;
+            font-weight: 400;
+            color: #444;
+        }
+
+        .banner-text p {
+            margin-top: 18px;
+            max-width: 480px;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .banner-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .banner-image img {
+            width: 100%;
+            max-width: 520px;
+            object-fit: contain;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        /* tablets */
+
+        @media (max-width: 900px) {
+            .category-banner {
+                padding: 40px 40px;
+            }
+
+            .banner-text h1 {
+                font-size: 38px;
+            }
+        }
+
+        /* celulares */
+
+        @media (max-width: 600px) {
+            .category-banner {
+                flex-direction: column;
+                text-align: left;
+                padding: 30px 20px;
+            }
+
+            .banner-text h1 {
+                font-size: 32px;
+            }
+
+            .banner-image img {
+                max-width: 350px;
+                margin-top: 20px;
+            }
+        }
+
+        /* --- CARD BASE --- */
+
+        .product-card {
+            width: 100%;
+            max-width: 320px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            transition: transform .25s ease;
+            margin-top: 10%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* --- WISHLIST / CORAÇÃO --- */
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffffffd5;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background.3s;
+        }
+
+        .wishlist-btn:hover {
+            background: #ffe3ea;
+        }
+
+        .wishlist-btn.selected span {
+            color: #ff4f6b;
+            transform: scale(1.1);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        /* ---  CARD IMAGEM PRODUTO --- */
+
+        .product-image {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        /* --- INFO DO PRODUTO --- */
+
+        .product-info {
+            margin-top: 12px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-metal,
+        .installments {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #777;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .new-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* --- INFORMAÇÕES DO PRODUTO NO HOVER --- */
+
+        .hover-actions {
+            position: absolute;
+            bottom: -120px;
+            /* esconde inicialmente */
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: #ffffffee;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: bottom .35s ease;
+        }
+
+        /* revela no hover */
+
+        .product-card:hover .hover-actions {
+            bottom: 0;
+        }
+
+        /* --- TAMANHO --- */
+
+        .size {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .size-text {
+            font-weight: bold;
+        }
+
+        .size-value {
+            background: #000;
+            color: #fff;
+            border-radius: 50px;
+            padding: 5px 12px;
+        }
+
+        /* --- BOTÃO ADICIONAR AO CARRINHO NO HOVER --- */
+
+        .add-cart-btn {
+            width: 100%;
+            background: #ff6b82;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .add-cart-btn:hover {
+            background: #ff4f6b;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+
+        @media (max-width: 480px) {
+            .product-card {
+                max-width: 100%;
+                padding: 12px;
+            }
+
+            .product-title {
+                font-size: 15px;
+            }
+
+            .new-price {
+                font-size: 18px;
+            }
+
+            .add-cart-btn {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .product-card {
+            flex: 1 1 260px;
+        }
+
+
+
+
+        /* --- BOTAO MOSTRAR MAIS--- */
+
+        .btn-mostrar {
+            display: block;
+            margin: 40px auto;
+            padding: 12px 28px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #ff4f6b, #ff4f6cbb);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 6px 15px #ff4f6c6e;
+        }
+
+        .btn-mostrar:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 20px #ff4f6c59;
+        }
+
+
+
+
+
+        /* FOOTER */
+        .footer-infos {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            background: #1d1d1d;
+            padding: 50px 40px;
+            color: white;
+            flex-wrap: wrap;
+            gap: 50px;
+            /* deixa perto, sem exagerar */
+        }
+
+        .info-item {
+            text-align: center;
+            max-width: 200px;
+            align-content: center;
+        }
+
+        .info-item i {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .info-item h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .info-item p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* RESPONSIVO – no celular fica 3 por linha (centralizado) */
+        @media (max-width: 600px) {
+            .footer-infos {
+                justify-content: center;
+                gap: 25px;
+            }
+
+            .info-item {
+                max-width: 150px;
+            }
+
+            .info-item i {
+                font-size: 40px;
+            }
+        }
+
+        .footer {
+            background-color: #000000;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+            flex-wrap: wrap;
+            margin-top: 0%;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        .footer-col {
+            width: 30%;
+            min-width: 250px;
+            margin-top: 2%;
+        }
+
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col ul li a {
+            text-decoration: none;
+            color: #333;
+            transition: 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        /* Responsivo */
+
+        @media (max-width: 768px) {
+            .footer-col {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        .payment-security {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+            gap: 20px;
+        }
+
+        .payment-methods,
+        .security-seal {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .payment-methods span,
+        .security-seal span {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .payment-methods img,
+        .security-seal img {
+            height: 32px;
+            object-fit: contain;
+        }
+
+        /* Responsivo */
+
+        @media (max-width: 768px) {
+            .payment-security {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .founder {
+            background-color: white;
+        }
+
+
+
+
+
+        /* Fundo escuro por trás */
+        .bag-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            display: flex;
+            justify-content: flex-end;
+            align-items: stretch;
+            z-index: 9999;
+        }
+
+        /* Container branco lateral */
+        .bag-container {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            animation: slideIn .3s ease;
+        }
+
+        /* X de fechar */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Título Minhas Joias */
+        .bag-title {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            text-align: left;
+            margin-top: 0;
+        }
+
+        /* Conteúdo */
+        .bag-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .bag-empty-title {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .bag-empty-text {
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        /* Botão */
+        .return-btn {
+            font-size: 1.1rem;
+            text-decoration: underline;
+            color: pink;
+            cursor: pointer;
+        }
+
+
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 480px) {
+            .bag-container {
+                max-width: 100%;
+                /* ocupa a tela toda */
+                padding: 15px;
+            }
+
+            .bag-empty-title {
+                font-size: 1.4rem;
+            }
+
+            .bag-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Animação */
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+
+
+        /* ===== OVERLAY BASE SACOLA ===== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            display: flex;
+            justify-content: flex-end;
+            z-index: 9999;
+        }
+
+        /* ===== DRAWER ===== */
+        .drawer {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            animation: slideIn .3s ease;
+        }
+
+        /* ===== BOTÃO FECHAR ===== */
+        .drawer-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* ===== TITULO ===== */
+        .drawer-title {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+        }
+
+        /* ===== CONTEÚDO ===== */
+        .drawer-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .drawer-empty-title {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .drawer-empty-text {
+            margin-bottom: 25px;
+        }
+
+        /* ===== BOTÃO VOLTAR ===== */
+        .drawer-action {
+            font-size: 1.1rem;
+            text-decoration: underline;
+            color: pink;
+            cursor: pointer;
+        }
+
+        /* ===== UTIL ===== */
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .drawer {
+                max-width: 100%;
+                padding: 15px;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+
+
+
+        /* ===== BOTOES DA SACOLA ===== */
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+        }
+
+        .cart-item img {
+            width: 70px;
+            border-radius: 8px;
+        }
+
+        .cart-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .cart-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .qty {
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff4f6b;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 5px;
+        }
+
+        .size-value.selected {
+            background: #ff4f6b;
+        }
+
+        .cart-footer {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 20px;
+            text-align: right;
+            font-size: 1.1rem;
+        }
+
+
+
+        /* ===== ITENS FAVORITOS ===== */
+        .favorite-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .favorite-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        .favorite-item img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .favorite-info {
+            flex: 1;
+        }
+
+        .favorite-info h4 {
+            font-size: 14px;
+            margin: 0 0 4px;
+        }
+
+        .favorite-info span {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .remove-favorite {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .remove-favorite:hover {
+            color: #ff4f6b;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="top-header">
+        <a href="index.html" class="logo">SYLVRAE</a>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Busque por nome ou código...">
+            <button id="searchBtn">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+
+        <div class="icons">
+            <a href="login.html"><i class="bi bi-person"></i></a>
+            <a href="#"><i class="bi bi-geo-alt"></i></a>
+
+
+            <button class="icon-btn" id="openFavorite" type="button">
+                <i class="bi bi-heart"></i>
+            </button>
+
+
+            <button class="cart" id="openBag" type="button">
+                <i class="bi bi-bag"></i>
+                <span class="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+
+    <nav class="menu">
+        <a href="Saneis.html">ANÉIS</a>
+        <a href="Scol.html">COLARES</a>
+        <a href="Sbrin.html">BRINCOS</a>
+        <a href="#">LANÇAMENTOS</a>
+        <a href="sobre.html">SOBRE</a>
+    </nav>
+
+
+
+
+
+
+    <section class="category-banner">
+        <div class="banner-text">
+            <h1>COLARES</h1>
+            <p>
+                Existem joias que são essenciais para trazer mais charme e elegância para o dia a dia. E o colar
+                feminino é uma peça que não pode faltar.
+            </p>
+        </div>
+
+        <div class="banner-image">
+            <img src="https://wallpapers.com/images/hd/jewelry-background-t5inm8ksiovejqso.jpg"
+                alt="Colares da Coleção">
+        </div>
+    </section>
+
+
+
+
+    <div class="products-container">
+        <div class="filter-box">
+            <h3 class="filter-title">Filtros</h3>
+
+            <div class="filter-group">
+                <h4>Metal</h4>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Prata de Lei</span>
+                </label>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Ouro 18k</span>
+                </label>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Aço</span>
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Preço</h4>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Até R$ 300</span>
+                </label>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>R$ 300 a R$ 700</span>
+                </label>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Acima de R$ 700</span>
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Coleção</h4>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Sylvrae Me</span>
+                </label>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Essence</span>
+                </label>
+
+                <label class="filter-item">
+                    <input type="checkbox">
+                    <span>Clássicos</span>
+                </label>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- 1 Card -->
+        <div class="product-card" data-id="392303C00" data-name="Colar De Corrente De Elos Duplos Sylvrae Me"
+            data-price="959.50"
+            data-image="https://pandorajoias.vtexassets.com/arquivos/ids/426115/PNGTRPNT_392303C00_RGB.png">
+
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://pandorajoias.vtexassets.com/arquivos/ids/426115/PNGTRPNT_392303C00_RGB.png?v=638962989790200000"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Colar De Corrente De Elos Duplos Sylvrae Me</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">R$ 1.919,00</p>
+                <p class="new-price">R$ 959,50</p>
+                <p class="installments">ou 10x de R$ 95,95 sem juros</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">45</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 2 Card -->
+        <div class="product-card" data-id="P002">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 3 Card -->
+        <div class="product-card" data-id="P003">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 4 Card -->
+        <div class="product-card" data-id="P004">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 5 Card -->
+        <div class="product-card" data-id="P005">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 6 Card -->
+        <div class="product-card" data-id="P006">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 7 Card -->
+        <div class="product-card" data-id="P007">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 8 Card -->
+        <div class="product-card" data-id="P008">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 9 Card -->
+        <div class="product-card" data-id="P009">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 10 Card -->
+        <div class="product-card" data-id="P010">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+
+        <!-- 11 Card -->
+        <div class="product-card" data-id="P011">
+            <div class="wishlist-btn">
+                <span>♡</span>
+            </div>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsATi0Vjjj_7ekBMscUaf-W7COw7gZrBYqvA&s"
+                alt="Colar de Corrente de Elos Duplos" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title">Nome do Colar</h3>
+                <p class="product-metal"><strong>Metal:</strong> Prata de Lei</p>
+
+                <p class="old-price">Preço que era</p>
+                <p class="new-price">Preço que passou a ser</p>
+                <p class="installments">Preço parcelado e quantidade de parcelamentos</p>
+            </div>
+
+            <!-- aparece só no hover -->
+            <div class="hover-actions">
+                <div class="size">
+                    <span class="size-text">Tamanho:</span>
+                    <button class="size-value">60</button>
+                    <button class="size-value">45</button>
+                    <button class="size-value">50</button>
+                </div>
+                <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-mostrar">Mostrar mais</button>
+
+    <footer>
+        <div class="footer-infos">
+            <div class="info-item">
+                <i class="bi bi-credit-card"></i>
+                <h3>PARCELAMENTO</h3>
+                <p>Parcele suas compras em 10X<br>sem juros no cartão.</p>
+            </div>
+
+            <div class="info-item">
+                <i class="bi bi-arrow-repeat"></i>
+                <h3>TROCA FÁCIL</h3>
+                <p>Não serviu? A SYLVRAE faz<br>a troca gratuitamente.</p>
+            </div>
+
+            <div class="info-item">
+                <i class="bi bi-truck"></i>
+                <h3>ENTREGA</h3>
+                <p>Frete grátis em compras<br>a partir de R$890,00.</p>
+            </div>
+        </div>
+
+
+
+        <div class="footer-container">
+
+            <!-- Coluna 1 -->
+            <div class="footer-col">
+                <h3>AJUDA</h3>
+                <ul>
+                    <li><a href="#">Dúvidas frequentes</a></li>
+                    <li><a href="#">Sobre os Pedidos</a></li>
+                    <li><a href="#">Política de Entrega</a></li>
+                    <li><a href="#">Trocas e Devoluções</a></li>
+                    <li><a href="#">Guia de tamanhos</a></li>
+                    <li><a href="#">Garantia</a></li>
+                    <li><a href="#">Cuidados com as Joias</a></li>
+                    <li><a href="#">Fale conosco</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 2 -->
+            <div class="footer-col">
+                <h3>SOBRE NÓS</h3>
+                <ul>
+                    <li><a href="#">Conheça a Sylvrae</a></li>
+                    <li><a href="#">Trabalhe conosco</a></li>
+                    <li><a href="#">Nossas lojas</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                    <li><a href="#">Clube Sylvrae</a></li>
+                    <li><a href="#">Regulamentos</a></li>
+                    <li><a href="#">Formulário de Proteção de Dados</a></li>
+                    <li><a href="#">Receba as Novidades</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3 -->
+            <div class="footer-col">
+                <h3>SAC</h3>
+                <ul>
+                    <li>(XX) XXXX-XXXX — São Paulo Capital</li>
+                    <li>XXXX-XXXX — Capitais e Regiões Metropolitanas</li>
+                    <li>0800-XXX-XXXX — Outras Regiões</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="payment-security">
+
+            <div class="payment-methods">
+                <span>Formas de pagamento:</span>
+                <img src="https://tse4.mm.bing.net/th/id/OIP.2sBA8sF7ixJtiW-3fguOyAHaDt?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Visa">
+                <img src="https://newchoice.com.br/wp-content/uploads/2019/02/master-card.png" alt="Mastercard">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.0y7yR74N0cTrfFmZ9M8AXAHaFP?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Elo">
+                <img src="https://logos-world.net/wp-content/uploads/2020/11/American-Express-Logo.png"
+                    alt="American Express">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.mLs98B1Ph-LTTu4KYPolaAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Hipercard">
+                <img src="https://logowik.com/content/uploads/images/pix4641.logowik.com.webp" alt="Pix">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.eYPcuhkhwGif2uizpakfggHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Boleto Bancário">
+            </div>
+
+            <div class="security-seal">
+                <span>Pagamento seguro:</span>
+                <img src="https://images.tcdn.com.br/img/editor/up/152631/certificadossl.png" alt="Selo SSL">
+            </div>
+
+        </div>
+
+
+
+        <!-- SACOLA SOBREPOSTA -->
+        <div class="bag-overlay hidden" id="bag">
+            <div class="bag-container">
+
+                <button class="close-btn" id="closeBag">&times;</button>
+
+                <h2 class="bag-title">Minhas Joias</h2>
+
+                <div class="bag-content">
+
+                    <!-- LISTA DE ITENS -->
+                    <div id="cartItems"></div>
+
+                    <!-- SACOLA VAZIA -->
+                    <div class="empty-cart">
+                        <h3 class="bag-empty-title">Sua sacola está vazia</h3>
+                        <p class="bag-empty-text">
+                            Escolha suas joias e adicione os produtos à sacola
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- RODAPÉ DA SACOLA -->
+                <div class="cart-footer">
+                    <p class="subtotal">
+                        Subtotal: <strong id="cartSubtotal">R$ 0,00</strong>
+                    </p>
+                </div>
+
+                <a href="#" class="return-btn" id="continueShopping">Voltar e escolher</a>
+
+            </div>
+        </div>
+
+
+        <div class="overlay hidden" id="favorite">
+            <div class="drawer">
+                <button class="drawer-close" id="closeFavorite">&times;</button>
+
+                <h2 class="drawer-title">Meus Favoritos</h2>
+
+                <div class="drawer-content">
+
+                    <!-- LISTA DE FAVORITOS -->
+                    <div id="favoriteItems"></div>
+
+                    <!-- ESTADO VAZIO -->
+                    <div class="empty-favorite">
+                        <h3 class="drawer-empty-title">Nenhum favorito ainda</h3>
+                        <p class="drawer-empty-text">
+                            Toque no coração para salvar suas joias favoritas
+                        </p>
+
+                        <a href="#" class="drawer-action" id="continueFavorite">
+                            Voltar e escolher
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+
+
+
+
+
+    <script>
+
+        // ===== ESCONDER/ MOSTRAR HEADER E MENU AO SCROLLAR =====
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const header = document.querySelector(".top-header");
+            const menu = document.querySelector(".menu");
+
+            let lastScroll = window.pageYOffset || 0;
+            const DELTA = 6; // evita "piscadas"
+
+            window.addEventListener("scroll", () => {
+                const currentScroll = window.pageYOffset || 0;
+
+                // Sempre mostrar no topo
+                if (currentScroll <= 0) {
+                    header.classList.remove("hide-scroll");
+                    menu.classList.remove("hide-scroll");
+                    lastScroll = currentScroll;
+                    return;
+                }
+
+                // Descendo → ocultar
+                if (currentScroll > lastScroll + DELTA) {
+                    header.classList.add("hide-scroll");
+                    menu.classList.add("hide-scroll");
+                }
+
+                // Subindo → mostrar
+                else if (currentScroll < lastScroll - DELTA) {
+                    header.classList.remove("hide-scroll");
+                    menu.classList.remove("hide-scroll");
+                }
+
+                lastScroll = currentScroll;
+            });
+        });
+
+
+
+
+
+        // ===== BUSCA DE PRODUTOS =====
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const searchInput = document.getElementById("searchInput");
+            const searchBtn = document.getElementById("searchBtn");
+
+            const productCards = document.querySelectorAll(".product-card");
+
+            function buscarProdutos() {
+                const termo = searchInput.value.trim().toLowerCase();
+
+                let encontrou = false;
+
+                productCards.forEach(card => {
+                    const titulo = card.querySelector(".product-title")
+                        .innerText
+                        .toLowerCase();
+
+                    if (titulo.includes(termo)) {
+                        card.style.display = "block";
+                        encontrou = true;
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+
+                if (!encontrou) {
+                    alert("Nenhum produto encontrado");
+                }
+            }
+
+            // Clique no botão
+            searchBtn.addEventListener("click", buscarProdutos);
+
+            // Enter no input
+            searchInput.addEventListener("keydown", e => {
+                if (e.key === "Enter") {
+                    buscarProdutos();
+                }
+            });
+
+        });
+
+
+
+
+
+
+        /* =====================
+           STORAGE KEYS
+        ===================== */
+        const CART_KEY = "cart";
+        const FAVORITE_KEY = "favorites";
+
+        /* =====================
+           ELEMENTOS
+        ===================== */
+        const bag = document.getElementById("bag");
+        const openBagBtn = document.getElementById("openBag");
+        const closeBagBtn = document.getElementById("closeBag");
+
+        const favorite = document.getElementById("favorite");
+        const openFavoriteBtn = document.getElementById("openFavorite");
+        const closeFavoriteBtn = document.getElementById("closeFavorite");
+
+        const cartItemsEl = document.getElementById("cartItems");
+        const cartCountEl = document.querySelector(".cart-count");
+        const subtotalEl = document.getElementById("cartSubtotal");
+        const emptyCartEl = document.querySelector(".empty-cart");
+
+        const favoriteItemsEl = document.getElementById("favoriteItems");
+        const emptyFavoriteEl = document.querySelector(".empty-favorite");
+
+        /* =====================
+           STATE GLOBAL
+        ===================== */
+        let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        let favorites = JSON.parse(localStorage.getItem(FAVORITE_KEY)) || [];
+
+        /* =====================
+           HELPERS
+        ===================== */
+        const saveCart = () =>
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+        const saveFavorites = () =>
+            localStorage.setItem(FAVORITE_KEY, JSON.stringify(favorites));
+
+        /* =====================
+           RENDER CARRINHO
+        ===================== */
+        function renderCart() {
+            cartItemsEl.innerHTML = "";
+
+            let totalItems = 0;
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                totalItems += item.quantity;
+                subtotal += item.price * item.quantity;
+
+                const div = document.createElement("div");
+                div.className = "cart-item";
+
+                div.innerHTML = `
+      <img src="${item.image}">
+      <div class="cart-info">
+        <strong>${item.name}</strong>
+        <p>Tamanho: ${item.size}</p>
+
+        <div class="cart-actions">
+          <button class="qty-btn minus">−</button>
+          <span class="qty">${item.quantity}</span>
+          <button class="qty-btn plus">+</button>
+        </div>
+
+        <p class="cart-price">R$ ${(item.price * item.quantity)
+                        .toFixed(2)
+                        .replace(".", ",")}</p>
+
+        <button class="remove-item">Remover</button>
+      </div>
+    `;
+
+                div.querySelector(".plus").onclick = () => {
+                    item.quantity++;
+                    saveCart();
+                    renderCart();
+                };
+
+                div.querySelector(".minus").onclick = () => {
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                        saveCart();
+                        renderCart();
+                    }
+                };
+
+                div.querySelector(".remove-item").onclick = () => {
+                    cart.splice(index, 1);
+                    saveCart();
+                    renderCart();
+                };
+
+                cartItemsEl.appendChild(div);
+            });
+
+            cartCountEl.innerText = totalItems;
+            subtotalEl.innerText =
+                "R$ " + subtotal.toFixed(2).replace(".", ",");
+
+            emptyCartEl.style.display = cart.length ? "none" : "block";
+        }
+
+        /* =====================
+           RENDER FAVORITOS
+        ===================== */
+        function renderFavorites() {
+            favoriteItemsEl.innerHTML = "";
+
+            favorites.forEach((item, index) => {
+                const div = document.createElement("div");
+                div.className = "favorite-item";
+
+                div.innerHTML = `
+      <img src="${item.image}">
+      <div class="favorite-info">
+        <h4>${item.name}</h4>
+        <span>R$ ${item.price.toFixed(2).replace(".", ",")}</span>
+      </div>
+      <button class="remove-favorite">&times;</button>
+    `;
+
+                div.querySelector(".remove-favorite").onclick = () => {
+                    favorites.splice(index, 1);
+                    saveFavorites();
+                    renderFavorites();
+                    syncWishlistButtons();
+                };
+
+                favoriteItemsEl.appendChild(div);
+            });
+
+            emptyFavoriteEl.style.display =
+                favorites.length ? "none" : "block";
+        }
+
+        /* =====================
+           SYNC CORAÇÕES
+        ===================== */
+        function syncWishlistButtons() {
+            document.querySelectorAll(".product-card").forEach(card => {
+                const id = card.dataset.id;
+                const btn = card.querySelector(".wishlist-btn");
+                btn.classList.toggle(
+                    "selected",
+                    favorites.some(f => f.id === id)
+                );
+            });
+        }
+
+        /* =====================
+           EVENTOS PRODUTOS
+        ===================== */
+        document.querySelectorAll(".product-card").forEach(card => {
+            const id = card.dataset.id;
+            const name = card.dataset.name || card.querySelector(".product-title").innerText;
+            const price = parseFloat(card.dataset.price || "0");
+            const image = card.dataset.image || card.querySelector(".product-image").src;
+
+            // tamanhos
+            const sizes = card.querySelectorAll(".size-value");
+            sizes.forEach(size => {
+                size.onclick = () => {
+                    sizes.forEach(s => s.classList.remove("selected"));
+                    size.classList.add("selected");
+                };
+            });
+
+            // carrinho
+            card.querySelector(".add-cart-btn").onclick = () => {
+                const sizeEl = card.querySelector(".size-value.selected");
+                if (!sizeEl) return alert("Selecione um tamanho");
+
+                const size = sizeEl.innerText;
+
+                const existing = cart.find(
+                    i => i.id === id && i.size === size
+                );
+
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    cart.push({ id, name, price, image, size, quantity: 1 });
+                }
+
+                saveCart();
+                renderCart();
+                bag.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
+            };
+
+            // favoritos
+            const favBtn = card.querySelector(".wishlist-btn");
+            favBtn.onclick = () => {
+                const index = favorites.findIndex(f => f.id === id);
+
+                if (index >= 0) {
+                    favorites.splice(index, 1);
+                } else {
+                    favorites.push({ id, name, price, image });
+                }
+
+                saveFavorites();
+                renderFavorites();
+                syncWishlistButtons();
+            };
+        });
+
+        /* =====================
+           OVERLAYS
+        ===================== */
+        openBagBtn.onclick = () => {
+            bag.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        };
+        closeBagBtn.onclick = () => {
+            bag.classList.add("hidden");
+            document.body.style.overflow = "";
+        };
+
+        openFavoriteBtn.onclick = () => {
+            favorite.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        };
+        closeFavoriteBtn.onclick = () => {
+            favorite.classList.add("hidden");
+            document.body.style.overflow = "";
+        };
+
+        /* =====================
+           INIT
+        ===================== */
+        renderCart();
+        renderFavorites();
+        syncWishlistButtons();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
