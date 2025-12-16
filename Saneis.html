@@ -347,21 +347,26 @@
 
         /* --- BANNER CATEGORIA --- */
 
+        /* --- BANNER CATEGORIA --- */
+
         .category-banner {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 60px 80px;
+            padding: 0;
             background: #f7f7f7;
             gap: 20px;
             flex-wrap: wrap;
+            position: relative;
             /* importante para responsividade */
         }
 
         .banner-text {
-            flex: 1;
-            min-width: 260px;
+            position: absolute;
+            left: 80px;
+            bottom: 60px;
+            color: white;
         }
 
         .banner-text h1 {
@@ -376,7 +381,7 @@
         .banner-text .product-count {
             font-size: 18px;
             font-weight: 400;
-            color: #444;
+            color: #ffffff;
         }
 
         .banner-text p {
@@ -384,19 +389,19 @@
             max-width: 480px;
             font-size: 16px;
             line-height: 1.5;
-            color: #333;
+            color: #ffffff;
         }
 
         .banner-image {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
+            width: 100%;
+            height: 400px;
         }
 
         .banner-image img {
             width: 100%;
-            max-width: 520px;
-            object-fit: contain;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
         }
 
         /* --- RESPONSIVIDADE --- */
@@ -404,11 +409,27 @@
 
         @media (max-width: 900px) {
             .category-banner {
-                padding: 40px 40px;
+                padding: 0;
+            }
+
+            .banner-text {
+                padding: 40px;
             }
 
             .banner-text h1 {
-                font-size: 38px;
+                font-size: 36px;
+            }
+
+            .banner-image {
+                width: 100%;
+                height: 320px;
+            }
+
+            .banner-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                max-width: none;
             }
         }
 
@@ -416,26 +437,46 @@
 
         @media (max-width: 600px) {
             .category-banner {
+                padding: 0;
                 flex-direction: column;
-                text-align: left;
-                padding: 30px 20px;
+            }
+
+            .banner-text {
+                padding: 20px;
             }
 
             .banner-text h1 {
-                font-size: 32px;
+                font-size: 30px;
+                line-height: 1.2;
+            }
+
+            .banner-text .product-count {
+                font-size: 16px;
+            }
+
+            .banner-text p {
+                font-size: 15px;
+            }
+
+            .banner-image {
+                width: 100%;
+                height: 260px;
             }
 
             .banner-image img {
-                max-width: 350px;
-                margin-top: 20px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                max-width: none;
             }
         }
+
 
         /* --- CARD BASE --- */
 
         .product-card {
             width: 100%;
-            max-width: 320px;
+            max-width: 280px;
             background: #fff;
             border-radius: 12px;
             padding: 15px;
@@ -590,7 +631,7 @@
 
         @media (max-width: 480px) {
             .product-card {
-                max-width: 100%;
+                max-width: 93%;
                 padding: 12px;
             }
 
@@ -612,6 +653,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 25px;
+            margin-left: 6%;
         }
 
         .product-card {
@@ -1161,14 +1203,13 @@
         <div class="banner-text">
             <h1>ANEIS</h1>
             <p>
-                Existem joias que falam por si só. Nossos anéis são projetados para expressar sua individualidade e estilo
-                único. Desde designs delicados e minimalistas até peças ousadas e chamativas, cada anel é uma obra de arte
+                Existem joias que falam por si só. Nossos anéis são projetados para expressar sua individualidade e
+                estilo único.
             </p>
         </div>
 
         <div class="banner-image">
-            <img src=""
-                alt="Anéis da Coleção">
+            <img src="https://3.bp.blogspot.com/-WQI20CZqtCw/TZpQlT_9mbI/AAAAAAAAB7k/M6-qqZPEuBE/s1600/anel10.jpg" alt="Anéis da Coleção">
         </div>
     </section>
 
