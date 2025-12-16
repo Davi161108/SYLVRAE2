@@ -198,7 +198,7 @@
             .menu {
                 flex-wrap: wrap;
                 gap: 12px;
-                display: none;
+            
             }
 
             .top-header {
@@ -352,16 +352,19 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 60px 80px;
+            padding: 0;
             background: #f7f7f7;
             gap: 20px;
             flex-wrap: wrap;
+            position: relative;
             /* importante para responsividade */
         }
 
         .banner-text {
-            flex: 1;
-            min-width: 260px;
+            position: absolute;
+            left: 80px;
+            bottom: 60px;
+            color: white;
         }
 
         .banner-text h1 {
@@ -376,7 +379,7 @@
         .banner-text .product-count {
             font-size: 18px;
             font-weight: 400;
-            color: #444;
+            color: #ffffff;
         }
 
         .banner-text p {
@@ -384,31 +387,49 @@
             max-width: 480px;
             font-size: 16px;
             line-height: 1.5;
-            color: #333;
+            color: #ffffff;
+            margin-left: 0%;
         }
 
         .banner-image {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
+            width: 100%;
+            height: 400px;
         }
 
         .banner-image img {
             width: 100%;
-            max-width: 520px;
-            object-fit: contain;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
         }
+
 
         /* --- RESPONSIVIDADE --- */
         /* tablets */
 
         @media (max-width: 900px) {
             .category-banner {
-                padding: 40px 40px;
+                padding: 0;
+            }
+
+            .banner-text {
+                padding: 40px;
             }
 
             .banner-text h1 {
-                font-size: 38px;
+                font-size: 36px;
+            }
+
+            .banner-image {
+                width: 100%;
+                height: 320px;
+            }
+
+            .banner-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                max-width: none;
             }
         }
 
@@ -416,18 +437,37 @@
 
         @media (max-width: 600px) {
             .category-banner {
+                padding: 0;
                 flex-direction: column;
-                text-align: left;
-                padding: 30px 20px;
+            }
+
+            .banner-text {
+                padding: 20px;
             }
 
             .banner-text h1 {
-                font-size: 32px;
+                font-size: 30px;
+                line-height: 1.2;
+            }
+
+            .banner-text .product-count {
+                font-size: 16px;
+            }
+
+            .banner-text p {
+                font-size: 15px;
+            }
+
+            .banner-image {
+                width: 100%;
+                height: 260px;
             }
 
             .banner-image img {
-                max-width: 350px;
-                margin-top: 20px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                max-width: none;
             }
         }
 
@@ -1161,7 +1201,7 @@
         <div class="banner-text">
             <h1>BRINCOS</h1>
             <p>
-                Existem joias que são essenciais para trazer mais charme e elegância para o dia a dia. Os brincos 
+                Existem joias que são essenciais para trazer mais charme e elegância para o dia a dia. Os brincos
                 da Sylvrae Me foram feitos para isso: realçar a beleza feminina com delicadeza e sofisticação. Seja
                 para um look casual ou para uma ocasião especial, um bom brinco feminino é uma peça que não pode faltar.
 
@@ -1169,7 +1209,7 @@
         </div>
 
         <div class="banner-image">
-            <img src=""
+            <img src="https://png.pngtree.com/thumb_back/fh260/background/20240718/pngtree-white-gold-earrings-with-diamond-isolated-on-the-black-background-image_15888757.jpg"
                 alt="Brincos da Coleção">
         </div>
     </section>
@@ -1298,7 +1338,7 @@
                 <div class="size">
                     <span class="size-text">Tamanho:</span>
                     <button class="size-value">U</button>
-                    
+
                 </div>
                 <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
             </div>
@@ -1439,7 +1479,7 @@
                 <div class="size">
                     <span class="size-text">Tamanho:</span>
                     <button class="size-value">U</button>
-                    
+
                 </div>
                 <button class="add-cart-btn">ADICIONAR AO CARRINHO</button>
             </div>
