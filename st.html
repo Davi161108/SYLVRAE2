@@ -120,9 +120,27 @@
             color: #d60078;
         }
 
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* SACOLA COM NOTIFICAÇÃO */
         .cart {
             position: relative;
+            background: none;
+            border:none;
+            padding: none;
+            margin: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .cart-count {
@@ -445,6 +463,7 @@
             /* largura do carrossel */
             overflow: hidden;
             position: relative;
+            margin-top: 2%;
         }
 
         .carousel-track {
@@ -1522,8 +1541,259 @@
             });
 
         });
+
+
+
+
+
+
+        /* =====================
+           STORAGE KEYS
+        ===================== */
+        const CART_KEY = "cart";
+        const FAVORITE_KEY = "favorites";
+
+        /* =====================
+           ELEMENTOS
+        ===================== */
+        const bag = document.getElementById("bag");
+        const openBagBtn = document.getElementById("openBag");
+        const closeBagBtn = document.getElementById("closeBag");
+
+        const favorite = document.getElementById("favorite");
+        const openFavoriteBtn = document.getElementById("openFavorite");
+        const closeFavoriteBtn = document.getElementById("closeFavorite");
+
+        const cartItemsEl = document.getElementById("cartItems");
+        const cartCountEl = document.querySelector(".cart-count");
+        const subtotalEl = document.getElementById("cartSubtotal");
+        const emptyCartEl = document.querySelector(".empty-cart");
+
+        const favoriteItemsEl = document.getElementById("favoriteItems");
+        const emptyFavoriteEl = document.querySelector(".empty-favorite");
+
+        /* =====================
+           STATE GLOBAL
+        ===================== */
+        let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        let favorites = JSON.parse(localStorage.getItem(FAVORITE_KEY)) || [];
+
+        /* =====================
+           HELPERS
+        ===================== */
+        const saveCart = () =>
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+        const saveFavorites = () =>
+            localStorage.setItem(FAVORITE_KEY, JSON.stringify(favorites));
+
+        /* =====================
+           RENDER CARRINHO
+        ===================== */
+        function renderCart() {
+            cartItemsEl.innerHTML = "";
+
+            let totalItems = 0;
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                totalItems += item.quantity;
+                subtotal += item.price * item.quantity;
+
+                const div = document.createElement("div");
+                div.className = "cart-item";
+
+                div.innerHTML = `
+      <img src="${item.image}">
+      <div class="cart-info">
+        <strong>${item.name}</strong>
+        <p>Tamanho: ${item.size}</p>
+
+        <div class="cart-actions">
+          <button class="qty-btn minus">−</button>
+          <span class="qty">${item.quantity}</span>
+          <button class="qty-btn plus">+</button>
+        </div>
+
+        <p class="cart-price">R$ ${(item.price * item.quantity)
+                        .toFixed(2)
+                        .replace(".", ",")}</p>
+
+        <button class="remove-item">Remover</button>
+      </div>
+    `;
+
+                div.querySelector(".plus").onclick = () => {
+                    item.quantity++;
+                    saveCart();
+                    renderCart();
+                };
+
+                div.querySelector(".minus").onclick = () => {
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                        saveCart();
+                        renderCart();
+                    }
+                };
+
+                div.querySelector(".remove-item").onclick = () => {
+                    cart.splice(index, 1);
+                    saveCart();
+                    renderCart();
+                };
+
+                cartItemsEl.appendChild(div);
+            });
+
+            cartCountEl.innerText = totalItems;
+            subtotalEl.innerText =
+                "R$ " + subtotal.toFixed(2).replace(".", ",");
+
+            emptyCartEl.style.display = cart.length ? "none" : "block";
+        }
+
+        /* =====================
+           RENDER FAVORITOS
+        ===================== */
+        function renderFavorites() {
+            favoriteItemsEl.innerHTML = "";
+
+            favorites.forEach((item, index) => {
+                const div = document.createElement("div");
+                div.className = "favorite-item";
+
+                div.innerHTML = `
+      <img src="${item.image}">
+      <div class="favorite-info">
+        <h4>${item.name}</h4>
+        <span>R$ ${item.price.toFixed(2).replace(".", ",")}</span>
+      </div>
+      <button class="remove-favorite">&times;</button>
+    `;
+
+                div.querySelector(".remove-favorite").onclick = () => {
+                    favorites.splice(index, 1);
+                    saveFavorites();
+                    renderFavorites();
+                    syncWishlistButtons();
+                };
+
+                favoriteItemsEl.appendChild(div);
+            });
+
+            emptyFavoriteEl.style.display =
+                favorites.length ? "none" : "block";
+        }
+
+        /* =====================
+           SYNC CORAÇÕES
+        ===================== */
+        function syncWishlistButtons() {
+            document.querySelectorAll(".product-card").forEach(card => {
+                const id = card.dataset.id;
+                const btn = card.querySelector(".wishlist-btn");
+                btn.classList.toggle(
+                    "selected",
+                    favorites.some(f => f.id === id)
+                );
+            });
+        }
+
+        /* =====================
+           EVENTOS PRODUTOS
+        ===================== */
+        document.querySelectorAll(".product-card").forEach(card => {
+            const id = card.dataset.id;
+            const name = card.dataset.name || card.querySelector(".product-title").innerText;
+            const price = parseFloat(card.dataset.price || "0");
+            const image = card.dataset.image || card.querySelector(".product-image").src;
+
+            // tamanhos
+            const sizes = card.querySelectorAll(".size-value");
+            sizes.forEach(size => {
+                size.onclick = () => {
+                    sizes.forEach(s => s.classList.remove("selected"));
+                    size.classList.add("selected");
+                };
+            });
+
+            // carrinho
+            card.querySelector(".add-cart-btn").onclick = () => {
+                const sizeEl = card.querySelector(".size-value.selected");
+                if (!sizeEl) return alert("Selecione um tamanho");
+
+                const size = sizeEl.innerText;
+
+                const existing = cart.find(
+                    i => i.id === id && i.size === size
+                );
+
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    cart.push({ id, name, price, image, size, quantity: 1 });
+                }
+
+                saveCart();
+                renderCart();
+                bag.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
+            };
+
+            // favoritos
+            const favBtn = card.querySelector(".wishlist-btn");
+            favBtn.onclick = () => {
+                const index = favorites.findIndex(f => f.id === id);
+
+                if (index >= 0) {
+                    favorites.splice(index, 1);
+                } else {
+                    favorites.push({ id, name, price, image });
+                }
+
+                saveFavorites();
+                renderFavorites();
+                syncWishlistButtons();
+            };
+        });
+
+        /* =====================
+           OVERLAYS
+        ===================== */
+        openBagBtn.onclick = () => {
+            bag.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        };
+        closeBagBtn.onclick = () => {
+            bag.classList.add("hidden");
+            document.body.style.overflow = "";
+        };
+
+        openFavoriteBtn.onclick = () => {
+            favorite.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        };
+        closeFavoriteBtn.onclick = () => {
+            favorite.classList.add("hidden");
+            document.body.style.overflow = "";
+        };
+
+        /* =====================
+           INIT
+        ===================== */
+        renderCart();
+        renderFavorites();
+        syncWishlistButtons();
+
+        // Scroll do botão "Comprar agora"
+        document.getElementById("btn").addEventListener("click", () => {
+            document
+                .getElementById("colecao")
+                .scrollIntoView({ behavior: "smooth" });
+        });
+
     </script>
 </body>
 
 </html>
-
