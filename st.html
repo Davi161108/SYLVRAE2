@@ -519,7 +519,7 @@
         .filter-box {
             width: 100%;
             max-width: 280px;
-            background: #fff;
+            background: transparent;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
@@ -531,10 +531,12 @@
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 20px;
+            color: white;
         }
 
         .filter-group {
             margin-bottom: 25px;
+            color: white;
         }
 
         .filter-item {
@@ -544,6 +546,7 @@
             margin: 8px 0;
             cursor: pointer;
             user-select: none;
+            color: white;
         }
 
 
@@ -924,11 +927,12 @@
         .founder {
             background-color: white;
         }
-        
-        a{
+
+        a {
             text-decoration: none;
             color: inherit;
         }
+        
     </style>
 </head>
 
@@ -983,7 +987,9 @@
             <h1>NETFLIX</h1>
             <h2>ALERTA VERMELHO, NERDS!</h2>
             <h3>Vire seu estilo de cabeça para baixo com charms e joias inspiradas no universo de Stranger Things.</h3>
-            <button class="btn-collection">Veja toda coleção</button>
+            <button class="btn-collection" id="btn">
+                Veja toda coleção
+            </button>
         </div>
 
 
@@ -1031,7 +1037,7 @@
 
 
 
-    <div class="products-container">
+    <div class="products-container" id="btn">
         <div class="filter-box">
             <h3 class="filter-title">Filtros</h3>
 
@@ -1761,8 +1767,14 @@
         renderFavorites();
         syncWishlistButtons();
 
+        // Scroll do botão "Comprar agora"
+        document.getElementById("btn").addEventListener("click", () => {
+            document
+                .getElementById("colecao")
+                .scrollIntoView({ behavior: "smooth" });
+        });
+
     </script>
 </body>
 
 </html>
-
